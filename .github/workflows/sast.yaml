@@ -49,3 +49,11 @@ jobs:
 
       - name: Inspect Dependency SARIF Report
         run: cat ${{ steps.scan.outputs.sarif }}
+
+      - name: Create empty ".truffleignore" in case it doesn't exist
+        run: touch .truffleignore
+
+      - name: Secret Scan with Trufflehog
+        uses: UnicornGlobal/trufflehog-actions-scan@master
+        with: # exclusions in .truffleignore file
+          branch: ${{ github.head_ref }}
